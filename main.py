@@ -44,12 +44,12 @@ def index():
 
 @app.route("/", methods=['POST'])
 def encrypt():
-    rot = request.form["rot"]
-    text = request.form["text"]
+    rot = request.form["rot"] #this takes the number field and converts it into int
+    text = request.form["text"] # this takes what is is the text box and passes it to the the variable 
 
-    new_message = rotate_string(text, int(rot))
-    encrypted_message = '<h1>' + new_message + '</h1>'
+    new_message = rotate_string(text, int(rot))  # this calls the rotate_string function from Caesar and passes text and rot as parameters
+    encrypted_message = '<h1>' + new_message + '</h1>' # this prints the returned value after the function manipulates the parameters above
 
-    return encrypted_message
+    return encrypted_message  # make sure to return your final variable every time or else it will not do anything. 
 
 app.run()
