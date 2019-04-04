@@ -10,27 +10,30 @@ form = """
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
         </style>
     </head>
     <body>
     <!-- put some stuff into here :) -->
         <form method="post">
-            <label for="rot">Rotate By</label>
-            <input type="text" name="rot" value="0"/>
-            <textarea name="text"></textarea>
+            <div>
+                <label for="rot">Rotate By:</label>
+                <input type="text" name="rot" value="0"/>
+            </div>
+            <textarea type="text" name="text">{0}</textarea>
+            <br>
             <input type="submit" name="submit query" />
         </form>
     </body>
@@ -39,8 +42,7 @@ form = """
 
 @app.route("/")
 def index():
-    return form
-
+    return form.format('')
 
 @app.route("/", methods=['POST'])
 def encrypt():
@@ -48,8 +50,8 @@ def encrypt():
     text = request.form["text"] # this takes what is is the text box and passes it to the the variable 
 
     new_message = rotate_string(text, int(rot))  # this calls the rotate_string function from Caesar and passes text and rot as parameters
-    encrypted_message = '<h1>' + new_message + '</h1>' # this prints the returned value after the function manipulates the parameters above
+    encrypted_message =  new_message # this prints the returned value after the function manipulates the parameters above
 
-    return encrypted_message  # make sure to return your final variable every time or else it will not do anything. 
-
+    # return encrypted_message  # make sure to return your final variable every time or else it will not do anything. 
+    return form.format(encrypted_message) # we do this so that way we can pass an arbitrary value back to {0} as a place holder. 
 app.run()
